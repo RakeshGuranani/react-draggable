@@ -1114,7 +1114,7 @@
 	      props = _ref.props;
 
 	  // Replace unitless items with px
-	  if (props.children.props.useTransform) {
+	  if (!props.children.props.useTransform) {
 	    return { "left": x, "top": y, "transform": props.defaultPosition.transform };
 	  } else {
 	    return defineProperty({}, browserPrefixToKey('transform', browserPrefix), 'translate(' + x + 'px,' + y + 'px)');
