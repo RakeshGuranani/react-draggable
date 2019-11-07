@@ -17,9 +17,17 @@ declare module 'react-draggable' {
     defaultPosition: ControlPosition,
     position: ControlPosition
   }
+  
+  export type DraggableEvent = React.MouseEvent<HTMLElement | SVGElement>
+    | React.TouchEvent<HTMLElement | SVGElement>
+    | MouseEvent
+    | TouchEvent
 
-  export type DraggableEventHandler = (e: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>, data: DraggableData) => void | false;
-
+  export type DraggableEventHandler = (
+    e: DraggableEvent,
+    data: DraggableData
+  ) => void | false;
+  
   export interface DraggableData {
     node: HTMLElement,
     x: number, y: number,

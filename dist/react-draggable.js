@@ -1304,12 +1304,13 @@
 
 	// Create an data exposed by <Draggable>'s events
 	function createDraggableData(draggable /*: Draggable*/, coreData /*: DraggableData*/) /*: DraggableData*/ {
+	  var scale = draggable.props.scale;
 	  return {
 	    node: coreData.node,
-	    x: draggable.state.x + coreData.deltaX,
-	    y: draggable.state.y + coreData.deltaY,
-	    deltaX: coreData.deltaX,
-	    deltaY: coreData.deltaY,
+	    x: draggable.state.x + coreData.deltaX / scale,
+	    y: draggable.state.y + coreData.deltaY / scale,
+	    deltaX: coreData.deltaX / scale,
+	    deltaY: coreData.deltaY / scale,
 	    lastX: draggable.state.x,
 	    lastY: draggable.state.y
 	  };
@@ -1662,6 +1663,12 @@
 	  grid: propTypes.arrayOf(propTypes.number),
 
 	  /**
+	   * `scale` specifies the scale of the area you are dragging inside of. It allows
+	   * the drag deltas to scale correctly with how far zoomed in/out you are.
+	   */
+	  scale: propTypes.number,
+
+	  /**
 	   * `handle` specifies a selector to be used as the handle that initiates drag.
 	   *
 	   * Example:
@@ -1775,6 +1782,7 @@
 	  defaultClassNameDragged: string,
 	  defaultPosition: ControlPosition,
 	  position: ControlPosition,
+	  scale: number
 	};*/
 
 	var Draggable = function (_React$Component) {
@@ -2099,7 +2107,8 @@
 	  defaultClassNameDragging: 'react-draggable-dragging',
 	  defaultClassNameDragged: 'react-draggable-dragged',
 	  defaultPosition: { x: 0, y: 0 },
-	  position: null
+	  position: null,
+	  scale: 1
 	});
 
 	// Previous versions of this lib exported <Draggable> as the root export. As to not break
